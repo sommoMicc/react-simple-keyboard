@@ -40,6 +40,10 @@ export declare const parseProps: (props: KeyboardReactInterface["options"]) => {
         [key: string]: string[];
     } | undefined;
     layoutCandidatesPageSize?: number | undefined;
+    candidatesProvider?: ((input: string) => {
+        candidateKey: string;
+        candidateValue: string;
+    }) | undefined;
     onRender?: ((instance?: import("simple-keyboard/build/types/components/Keyboard").default | undefined) => void) | undefined;
     onInit?: ((instance?: import("simple-keyboard/build/types/components/Keyboard").default | undefined) => void) | undefined;
     onChange?: ((input: string, e?: MouseEvent | undefined) => any) | undefined;
