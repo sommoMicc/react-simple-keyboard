@@ -1,18 +1,18 @@
-const path = require('path');
-const webpack = require('webpack');
+const path = require("path");
+const webpack = require("webpack");
 const PrettierPlugin = require("prettier-webpack-plugin");
-const TerserPlugin = require('terser-webpack-plugin');
-const getPackageJson = require('./scripts/getPackageJson');
+const TerserPlugin = require("terser-webpack-plugin");
+const getPackageJson = require("./scripts/getPackageJson");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
 
-const {
-  version,
-  name,
-  license,
-  repository,
-  author,
-} = getPackageJson('version', 'name', 'license', 'repository', 'author');
+const { version, name, license, repository, author } = getPackageJson(
+  "version",
+  "name",
+  "license",
+  "repository",
+  "author"
+);
 
 const banner = `
   ${name} v${version}
@@ -26,46 +26,47 @@ const banner = `
 
 module.exports = {
   mode: "production",
-  entry: './src/lib/index.ts',
-  target: 'es5',
+  entry: "./src/lib/index.ts",
+  target: "es5",
   output: {
-    filename: 'index.js',
-    path: path.resolve(__dirname, 'build'),
+    filename: "index.js",
+    path: path.resolve(__dirname, "build"),
     library: "ReactSimpleKeyboard",
-    libraryTarget: 'umd',
+    libraryTarget: "umd",
     clean: true,
-    globalObject: 'this',
+    globalObject: "this",
     environment: {
-      arrowFunction: false
-    }
+      arrowFunction: false,
+    },
+    chunkFormat: "commonjs",
   },
   optimization: {
     minimize: true,
     minimizer: [
       new TerserPlugin({ extractComments: false }),
-      new OptimizeCSSAssetsPlugin()
+      new OptimizeCSSAssetsPlugin(),
     ],
   },
   devServer: {
     open: true,
     hot: true,
     host: "localhost",
-    static: path.join(__dirname, 'demo'),
-    port: 9000
+    static: path.join(__dirname, "demo"),
+    port: 9000,
   },
   externals: {
     react: {
-      root: 'React',
-      commonjs2: 'react',
-      commonjs: 'react',
-      amd: 'react'
+      root: "React",
+      commonjs2: "react",
+      commonjs: "react",
+      amd: "react",
     },
-    'react-dom': {
-      root: 'ReactDOM',
-      commonjs2: 'react-dom',
-      commonjs: 'react-dom',
-      amd: 'react-dom'
-    }
+    "react-dom": {
+      root: "ReactDOM",
+      commonjs2: "react-dom",
+      commonjs: "react-dom",
+      amd: "react-dom",
+    },
   },
   module: {
     rules: [
@@ -73,8 +74,8 @@ module.exports = {
         test: /\.(js|json|ts|tsx)$/,
         exclude: /(node_modules|bower_components)/,
         use: {
-          loader: 'babel-loader'
-        }
+          loader: "babel-loader",
+        },
       },
       {
         test: /\.(sa|sc|c)ss$/,
@@ -85,11 +86,7 @@ module.exports = {
             loader: "postcss-loader",
             options: {
               postcssOptions: {
-                plugins: [
-                  [
-                    "autoprefixer"
-                  ],
-                ],
+                plugins: [["autoprefixer"]],
               },
             },
           },
@@ -97,18 +94,18 @@ module.exports = {
       },
       {
         test: /\.(png|jpe?g|gif|svg|eot|ttf|woff|woff2)$/,
-        use: ['url-loader'],
-      }
-    ]
+        use: ["url-loader"],
+      },
+    ],
   },
   plugins: [
     new PrettierPlugin(),
     new MiniCssExtractPlugin({
-        filename: 'css/index.css'
+      filename: "css/index.css",
     }),
-    new webpack.BannerPlugin(banner)
+    new webpack.BannerPlugin(banner),
   ],
   resolve: {
-    extensions: ['.ts', '.tsx', '.js', '.json']
-  }
+    extensions: [".ts", ".tsx", ".js", ".json"],
+  },
 };
