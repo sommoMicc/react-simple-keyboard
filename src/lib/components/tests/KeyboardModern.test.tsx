@@ -3,7 +3,7 @@ import Adapter from "@wojtekmaj/enzyme-adapter-react-17";
 import * as React from "react";
 
 import { setDOM } from "../../../utils/TestUtility";
-import Keyboard from "../Keyboard";
+import Keyboard from "../KeyboardModern";
 
 Enzyme.configure({ adapter: new Adapter() });
 
