@@ -1,18 +1,18 @@
 /**
  * Config to support modern browsers only (build/index.modern.js)
  */
-const path = require('path');
-const webpack = require('webpack');
-const TerserPlugin = require('terser-webpack-plugin');
-const getPackageJson = require('./scripts/getPackageJson');
+const path = require("path");
+const webpack = require("webpack");
+const TerserPlugin = require("terser-webpack-plugin");
+const getPackageJson = require("./scripts/getPackageJson");
 
-const {
-  version,
-  name,
-  license,
-  repository,
-  author,
-} = getPackageJson('version', 'name', 'license', 'repository', 'author');
+const { version, name, license, repository, author } = getPackageJson(
+  "version",
+  "name",
+  "license",
+  "repository",
+  "author"
+);
 
 const banner = `
   ${name} v${version} (index.modern.js - Modern Browsers bundle)
@@ -30,35 +30,34 @@ const banner = `
 
 module.exports = {
   mode: "production",
-  entry: './src/lib/index.modern.ts',
-  target: 'es5',
-  devtool: 'source-map',
+  entry: "./src/lib/index.modern.ts",
+  target: "es5",
+  devtool: "source-map",
   output: {
-    filename: 'index.modern.js',
-    path: path.resolve(__dirname, 'build'),
+    filename: "index.modern.js",
+    path: path.resolve(__dirname, "build"),
     library: "ReactSimpleKeyboard",
-    libraryTarget: 'umd',
-    globalObject: 'this'
+    libraryTarget: "umd",
+    globalObject: "this",
+    chunkFormat: "commonjs",
   },
   optimization: {
     minimize: true,
-    minimizer: [
-      new TerserPlugin({ extractComments: false }),
-    ],
+    minimizer: [new TerserPlugin({ extractComments: false })],
   },
   externals: {
     react: {
-      root: 'React',
-      commonjs2: 'react',
-      commonjs: 'react',
-      amd: 'react'
+      root: "React",
+      commonjs2: "react",
+      commonjs: "react",
+      amd: "react",
     },
-    'react-dom': {
-      root: 'ReactDOM',
-      commonjs2: 'react-dom',
-      commonjs: 'react-dom',
-      amd: 'react-dom'
-    }
+    "react-dom": {
+      root: "ReactDOM",
+      commonjs2: "react-dom",
+      commonjs: "react-dom",
+      amd: "react-dom",
+    },
   },
   module: {
     rules: [
@@ -66,30 +65,28 @@ module.exports = {
         test: /\.(js|json|ts|tsx)$/,
         exclude: /(node_modules|bower_components)/,
         use: {
-          loader: 'babel-loader',
+          loader: "babel-loader",
           options: {
             presets: [
               "@babel/preset-react",
               "@babel/env",
-              "@babel/preset-typescript"
+              "@babel/preset-typescript",
             ],
             plugins: [
               ["@babel/plugin-proposal-class-properties"],
-              ["@babel/plugin-transform-typescript"]
-            ]
-          }
-        }
+              ["@babel/plugin-transform-typescript"],
+            ],
+          },
+        },
       },
       {
         test: /\.(sa|sc|c)ss$/,
-        use: path.resolve('scripts/loaderMock.js')
-      }
-    ]
+        use: path.resolve("scripts/loaderMock.js"),
+      },
+    ],
   },
-  plugins: [
-    new webpack.BannerPlugin(banner)
-  ],
+  plugins: [new webpack.BannerPlugin(banner)],
   resolve: {
-    extensions: ['.ts', '.tsx', '.js', '.json']
-  }
+    extensions: [".ts", ".tsx", ".js", ".json"],
+  },
 };
