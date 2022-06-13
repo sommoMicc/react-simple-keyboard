@@ -45,7 +45,7 @@ const KeyboardReact = (props: KeyboardReactInterface["options"]) => {
         console.log(
           "ReactSimpleKeyboard - setOptions called due to updated props:",
           updatedProps,
-          updatedProps["baseClass"]
+          parsedProps["baseClass"]
         );
     }
   }, [initRef, cssClass, previousProps, props]);
