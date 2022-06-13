@@ -13,7 +13,14 @@ const KeyboardReact = (props: KeyboardReactInterface["options"]) => {
 
   React.useEffect(() => {
     const parsedProps = parseProps(props) as any;
+    const updatedProps = changedProps(previousProps.current, parsedProps);
 
+    if (updatedProps.find((f) => f === "baseClass") && keyboardRef.current) {
+      // If base class is changed, I need to rerender from scratch the keyboard since
+      // baseClass is used by the keyboard to generate instance reference
+      keyboardRef.current.destroy();
+      initRef.current = false;
+    }
     /**
      * Initialize simple-keyboard
      */
@@ -31,8 +38,6 @@ const KeyboardReact = (props: KeyboardReactInterface["options"]) => {
       ) as KeyboardReactInterface;
       parsedProps.keyboardRef && parsedProps.keyboardRef(keyboardRef.current);
     }
-
-    const updatedProps = changedProps(previousProps.current, parsedProps);
 
     /**
      * Only trigger render if props changed
