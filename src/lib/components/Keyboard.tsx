@@ -15,7 +15,11 @@ const KeyboardReact = (props: KeyboardReactInterface["options"]) => {
     const parsedProps = parseProps(props) as any;
     const updatedProps = changedProps(previousProps.current, parsedProps);
 
-    if (updatedProps.find((f) => f === "baseClass") && keyboardRef.current) {
+    if (
+      updatedProps.find((f) => f === "baseClass") !== undefined &&
+      keyboardRef.current
+    ) {
+      console.log("baseClass changed");
       // If base class is changed, I need to rerender from scratch the keyboard since
       // baseClass is used by the keyboard to generate instance reference
       keyboardRef.current.destroy();
@@ -25,18 +29,19 @@ const KeyboardReact = (props: KeyboardReactInterface["options"]) => {
      * Initialize simple-keyboard
      */
     if (!initRef.current) {
-      parsedProps.debug && console.log("Initializing simple-keyboard");
+      console.log("Initializing simple-keyboard");
       initRef.current = true;
-      parsedProps.debug && console.log("ReactSimpleKeyboard: Init");
+      console.log("ReactSimpleKeyboard: Init");
       const targetElem = targetElemRef.current as HTMLDivElement;
       const targetClass = `.${cssClass}`;
-      parsedProps.debug &&
-        console.log("TargetElement:", targetElem, "TargetClass:", targetClass);
+      console.log("TargetElement:", targetElem, "TargetClass:", targetClass);
       keyboardRef.current = new Keyboard(
         targetElem || targetClass,
         parsedProps
       ) as KeyboardReactInterface;
       parsedProps.keyboardRef && parsedProps.keyboardRef(keyboardRef.current);
+    } else {
+      console.log("SimpleKeyboard already initialized");
     }
 
     /**
