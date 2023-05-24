@@ -544,6 +544,7 @@ export interface KeyboardOptions {
             */
         [name: string]: any;
 }
+export function removeAllCandidateBoxes(): void;
 export interface CandidateBox {
     utilities: Utilities;
     candidateBoxElement: HTMLDivElement;
