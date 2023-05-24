@@ -76,7 +76,7 @@
     "prettier": "^2.6.2",
     "react": "^16.14.0 || ^17.0.0 || ^18.0.0",
     "react-dom": "^16.14.0 || ^17.0.0 || ^18.0.0",
-    "simple-keyboard": "git+https://github.com/sommoMicc/simple-keyboard.git#d08e124c9c88489952783746517e613bfcb4af58",
+    "simple-keyboard": "git+https://github.com/sommoMicc/simple-keyboard.git#12d0429f969022343810963e8e1980d31ad346e7",
     "style-loader": "^3.2.1",
     "terser-webpack-plugin": "^5.3.3",
     "typescript": "^4.7.3",
